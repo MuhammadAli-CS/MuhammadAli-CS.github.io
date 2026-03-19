@@ -14,10 +14,11 @@ function App() {
   return (
     <SmoothScroll>
       <div className="min-h-screen bg-background text-white font-sans relative">
-        {/* Background ambient light effects */}
+        {/* Dynamic Vercel-style Ambient Background */}
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-background">
-          <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-primary/20 blur-[120px]"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-secondary/20 blur-[120px]"></div>
+          <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-primary/20 blur-[100px] mix-blend-screen blob1 opacity-60"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-secondary/20 blur-[100px] mix-blend-screen blob2 opacity-50"></div>
+          <div className="absolute top-[30%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-accent/20 blur-[100px] mix-blend-screen blob3 opacity-40"></div>
           
           <div className="absolute inset-0 bg-grid-white/[0.02] bg-[length:32px_32px]"></div>
           {/* Functional monochrome film grain overlay */}
