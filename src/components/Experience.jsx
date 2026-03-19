@@ -52,53 +52,63 @@ const Experience = () => {
     }
   ];
 
+  const headerReveal = {
+    hidden: { y: "120%", rotate: 2 },
+    show: { y: "0%", rotate: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
+
   return (
     <section id="experience" className="py-24 border-t border-white/10">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto"
-      >
-        <div className="flex items-center mb-12">
-          <h2 className="text-3xl font-bold text-white mr-6">
+      <div className="flex items-center mb-12 overflow-hidden py-2 max-w-4xl mx-auto">
+        <motion.div
+           initial="hidden"
+           whileInView="show"
+           viewport={{ once: true, amount: 0.1 }}
+           className="flex items-center w-full"
+        >
+          <motion.h2 variants={headerReveal} className="text-3xl font-bold text-white mr-6 flex items-center">
             <span className="text-primary text-2xl mr-2">03.</span> Experience
-          </h2>
-          <div className="h-px bg-white/10 flex-grow max-w-sm"></div>
-        </div>
+          </motion.h2>
+          <motion.div 
+            initial={{ scaleX: 0 }} 
+            whileInView={{ scaleX: 1 }} 
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            className="h-px bg-white/10 flex-grow max-w-sm origin-left"
+          ></motion.div>
+        </motion.div>
+      </div>
 
-        <div className="relative border-l border-white/20 ml-3 md:ml-6 space-y-12 pb-4">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="relative pl-8 md:pl-12 group"
-            >
-              <div className="absolute w-4 h-4 rounded-full bg-darkCard border-2 border-primary -left-[9px] top-1 group-hover:bg-primary transition-colors"></div>
-              
-              <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-                <h3 className="text-xl font-bold text-gray-200">
-                  {exp.title} <span className="text-accent text-lg">@ {exp.company}</span>
-                </h3>
-                <span className="text-sm text-gray-400 font-mono mt-1 md:mt-0 whitespace-nowrap md:ml-4">{exp.date}</span>
-              </div>
-              
-              <ul className="text-gray-400 text-sm md:text-base space-y-3 mt-4">
-                {exp.description.map((desc, i) => (
-                  <li key={i} className="flex">
-                    <span className="text-secondary mr-2 mt-1 px-1">▹</span>
-                    <span>{desc}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+      <div className="relative border-l border-white/20 ml-3 md:ml-6 space-y-12 pb-4 max-w-4xl mx-auto">
+        {experiences.map((exp, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: index * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="relative pl-8 md:pl-12 group"
+          >
+            <div className="absolute w-4 h-4 rounded-full bg-darkCard border-2 border-primary -left-[9px] top-1 group-hover:bg-primary group-hover:scale-125 transition-all duration-300 ease-out"></div>
+            
+            <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
+              <h3 className="text-xl font-bold text-gray-200 group-hover:text-white transition-colors">
+                {exp.title} <span className="text-accent text-lg">@ {exp.company}</span>
+              </h3>
+              <span className="text-sm text-gray-400 font-mono mt-1 md:mt-0 whitespace-nowrap md:ml-4">{exp.date}</span>
+            </div>
+            
+            <ul className="text-gray-400 text-sm md:text-base space-y-3 mt-4">
+              {exp.description.map((desc, i) => (
+                <li key={i} className="flex group-hover:text-gray-300 transition-colors duration-300">
+                  <span className="text-secondary mr-2 mt-1 px-1">▹</span>
+                  <span>{desc}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 };
