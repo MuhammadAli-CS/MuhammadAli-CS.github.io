@@ -44,6 +44,22 @@
   66% { transform: translateY(50px) translateX(40px) scale(1.1); }
 }
 
+:root {
+  --primary-rgb: 79, 70, 229; /* Matches indigo-600 */
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes scrollPulse {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  51% { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
 .blob1 { animation: float1 15s infinite ease-in-out; will-change: transform; }
 .blob2 { animation: float2 18s infinite ease-in-out; will-change: transform; }
 .blob3 { animation: float3 20s infinite ease-in-out; will-change: transform; }

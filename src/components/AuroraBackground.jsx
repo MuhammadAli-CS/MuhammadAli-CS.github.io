@@ -7,14 +7,12 @@ void main() {
 }
 `;
 
-// Organic, multi-layered aurora shader
-// Colors tuned to deep indigo / violet / electric blue — matching Metalab's palette
 const FRAG_SRC = `
 precision highp float;
 uniform vec2  u_res;
 uniform float u_time;
+uniform vec2  u_mouse; // normalized [0,1]
 
-// Smooth noise helpers
 vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -65,36 +63,38 @@ float snoise(vec3 v) {
 
 void main() {
   vec2 uv = gl_FragCoord.xy / u_res;
-  // aspect-correct, centered coordinates
   vec2 p  = (uv - 0.5) * vec2(u_res.x / u_res.y, 1.0);
 
   float t = u_time * 0.12;
 
-  // --- Layer 1: big slow aurora sweep ---
-  float n1 = snoise(vec3(p * 1.4 + vec2(0.0, t * 0.4), t * 0.25));
-  // --- Layer 2: medium drift, perpendicular ---
-  float n2 = snoise(vec3(p * 2.2 + vec2(-t * 0.35, 0.1), t * 0.18 + 1.7));
-  // --- Layer 3: fine shimmer on top ---
-  float n3 = snoise(vec3(p * 4.5 + vec2(t * 0.2, t * 0.3), t * 0.3 + 3.5));
+  // Mouse parallax — smooth offset of noise field based on mouse position
+  vec2 mouseOffset = (u_mouse - 0.5) * 0.35;
 
-  // Combine layers
-  float wave = n1 * 0.55 + n2 * 0.30 + n3 * 0.15;
+  // Layer 1: big slow aurora sweep, pushed by mouse
+  float n1 = snoise(vec3(p * 1.4 + vec2(0.0, t * 0.4) + mouseOffset * 0.8, t * 0.25));
+  // Layer 2: medium drift, opposite parallax
+  float n2 = snoise(vec3(p * 2.2 + vec2(-t * 0.35, 0.1) - mouseOffset * 0.5, t * 0.18 + 1.7));
+  // Layer 3: fine shimmer on top
+  float n3 = snoise(vec3(p * 4.5 + vec2(t * 0.2, t * 0.3) + mouseOffset * 0.2, t * 0.3 + 3.5));
+  // Layer 4: extra slow deep wave (new — adds more dimensionality)
+  float n4 = snoise(vec3(p * 0.8 + vec2(t * 0.15, -t * 0.2) + mouseOffset, t * 0.1 + 7.1));
 
-  // Normalise to [0,1]
+  float wave = n1 * 0.42 + n2 * 0.28 + n3 * 0.15 + n4 * 0.15;
   float w = wave * 0.5 + 0.5;
 
-  // Deep dark base: near-black indigo
-  vec3 baseColor     = vec3(0.03, 0.02, 0.07);
-  // Mid: deep purple
-  vec3 purpleColor   = vec3(0.20, 0.04, 0.45);
-  // Accent: electric indigo/violet
-  vec3 violetColor   = vec3(0.38, 0.10, 0.85);
-  // Highlight: electric blue
-  vec3 blueColor     = vec3(0.08, 0.28, 0.90);
-  // Rare shimmer: icy white-blue
-  vec3 shimmerColor  = vec3(0.55, 0.65, 1.00);
+  // Mouse proximity glow — brighten around cursor position
+  vec2 mouseUV = vec2(u_mouse.x, 1.0 - u_mouse.y);
+  float mouseDist = length(uv - mouseUV);
+  float mouseGlow = smoothstep(0.35, 0.0, mouseDist) * 0.3;
 
-  // Multi-stop gradient
+  // Color palette: deep indigo → violet → electric blue → icy shimmer
+  vec3 baseColor    = vec3(0.03, 0.02, 0.07);
+  vec3 purpleColor  = vec3(0.20, 0.04, 0.45);
+  vec3 violetColor  = vec3(0.38, 0.10, 0.85);
+  vec3 blueColor    = vec3(0.08, 0.28, 0.90);
+  vec3 shimmerColor = vec3(0.55, 0.65, 1.00);
+  vec3 glowColor    = vec3(0.60, 0.30, 1.00); // mouse glow: vivid violet
+
   vec3 col;
   if (w < 0.30) {
     col = mix(baseColor, purpleColor, w / 0.30);
@@ -106,12 +106,13 @@ void main() {
     col = mix(blueColor, shimmerColor, (w - 0.82) / 0.18);
   }
 
-  // Vignette — darken edges strongly to keep text readable
+  // Add mouse glow on top
+  col += glowColor * mouseGlow;
+
+  // Vignette
   float dist = length(uv - 0.5) * 2.0;
   float vig  = smoothstep(1.6, 0.0, dist);
   col *= vig;
-
-  // Extra base darkness so content stays legible
   col *= 0.72;
 
   gl_FragColor = vec4(col, 1.0);
@@ -119,19 +120,16 @@ void main() {
 `;
 
 export default function AuroraBackground() {
-  const canvasRef = useRef(null);
-  const rafRef    = useRef(null);
-  const glRef     = useRef(null);
-  const progRef   = useRef(null);
-  const uRef      = useRef({});
+  const canvasRef  = useRef(null);
+  const rafRef     = useRef(null);
+  const mouseRef   = useRef({ x: 0.5, y: 0.5 });
+  const smoothRef  = useRef({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const gl = canvas.getContext('webgl', { antialias: false, alpha: false });
     if (!gl) return;
-    glRef.current = gl;
 
-    // compile shader
     const compile = (type, src) => {
       const s = gl.createShader(type);
       gl.shaderSource(s, src);
@@ -143,9 +141,7 @@ export default function AuroraBackground() {
     gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG_SRC));
     gl.linkProgram(prog);
     gl.useProgram(prog);
-    progRef.current = prog;
 
-    // full-screen quad
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
@@ -156,10 +152,9 @@ export default function AuroraBackground() {
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-    uRef.current = {
-      res:  gl.getUniformLocation(prog, 'u_res'),
-      time: gl.getUniformLocation(prog, 'u_time'),
-    };
+    const uRes   = gl.getUniformLocation(prog, 'u_res');
+    const uTime  = gl.getUniformLocation(prog, 'u_time');
+    const uMouse = gl.getUniformLocation(prog, 'u_mouse');
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio, 1.5);
@@ -170,11 +165,24 @@ export default function AuroraBackground() {
     resize();
     window.addEventListener('resize', resize);
 
+    const onMouse = (e) => {
+      mouseRef.current = {
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
+      };
+    };
+    window.addEventListener('mousemove', onMouse);
+
     let startTime = performance.now();
     const render = () => {
+      // Smooth mouse interpolation (lazy follow)
+      smoothRef.current.x += (mouseRef.current.x - smoothRef.current.x) * 0.04;
+      smoothRef.current.y += (mouseRef.current.y - smoothRef.current.y) * 0.04;
+
       const t = (performance.now() - startTime) / 1000;
-      gl.uniform2f(uRef.current.res, canvas.width, canvas.height);
-      gl.uniform1f(uRef.current.time, t);
+      gl.uniform2f(uRes,   canvas.width, canvas.height);
+      gl.uniform1f(uTime,  t);
+      gl.uniform2f(uMouse, smoothRef.current.x, smoothRef.current.y);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       rafRef.current = requestAnimationFrame(render);
     };
@@ -183,6 +191,7 @@ export default function AuroraBackground() {
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', onMouse);
     };
   }, []);
 

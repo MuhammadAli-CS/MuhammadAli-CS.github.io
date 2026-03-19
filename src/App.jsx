@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MouseTrailer from './components/MouseTrailer';
 import AuroraBackground from './components/AuroraBackground';
+import Particles from './components/Particles';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       
       {/* WebGL Aurora Background */}
       <AuroraBackground />
+      <Particles />
       {/* Subtle grid + noise overlay for depth */}
       <div className="fixed inset-0 z-[1] pointer-events-none">
         <div className="absolute inset-0 bg-grid-white/[0.015] bg-[length:32px_32px]"></div>
