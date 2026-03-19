@@ -14,15 +14,14 @@ function App() {
   return (
     <SmoothScroll>
       <div className="min-h-screen bg-background text-white font-sans relative">
-        {/* Premium Godly.website Style Background */}
-        <div className="fixed inset-0 z-0 pointer-events-none bg-[#030303]">
-          {/* Ambient, extremely subtle glows for depth without overwhelming saturation */}
-          <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-primary/5 blur-[120px] mix-blend-screen opacity-60"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-secondary/5 blur-[120px] mix-blend-screen opacity-50"></div>
+        {/* Background ambient light effects */}
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-background">
+          <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-primary/20 blur-[120px]"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-secondary/20 blur-[120px]"></div>
           
-          {/* Subtle grid and Film Grain Overlay */}
-          <div className="absolute inset-0 bg-grid-white/[0.01] bg-[length:64px_64px]"></div>
-          <div className="absolute inset-0 bg-noise opacity-[0.04] mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[length:32px_32px]"></div>
+          {/* Functional monochrome film grain overlay */}
+          <div className="absolute inset-0 bg-noise opacity-[0.03]"></div>
         </div>
 
         {/* Main content */}
