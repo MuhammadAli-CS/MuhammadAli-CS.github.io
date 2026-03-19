@@ -4,9 +4,9 @@ import Lenis from '@studio-freight/lenis';
 const SmoothScroll = ({ children }) => {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1, // Linear interpolation is far better for Windows scroll wheels than duration
-      wheelMultiplier: 1, // Updated from deprecated mouseMultiplier
-      smoothWheel: true, // Updated from deprecated 'smooth'
+      lerp: 0.18, // Much faster lerp prevents 'drag' feeling
+      wheelMultiplier: 1.2, 
+      smoothWheel: true, 
       smoothTouch: false,
       touchMultiplier: 2,
     });

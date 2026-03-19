@@ -15,7 +15,7 @@ function App() {
     <SmoothScroll>
       <div className="min-h-screen bg-background text-white font-sans relative">
         {/* Dynamic Vercel-style Ambient Background (Hardware Accelerated, iOS Safe) */}
-        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-background">
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-background transform-gpu">
           {/* Base gradient for texture and depth (Layer 1) */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-darkCard/20 via-background to-background"></div>
           
