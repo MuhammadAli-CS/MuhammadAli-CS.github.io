@@ -29,23 +29,23 @@ const Hero = () => {
             Hi, my name is
           </motion.h2>
         </div>
-        
+
         <div className="overflow-hidden mb-4 py-2">
           <motion.h1 variants={textReveal} className="text-5xl sm:text-7xl font-bold text-white leading-tight">
             Muhammad Ali.
           </motion.h1>
         </div>
-        
+
         <div className="overflow-hidden mb-6 py-2">
           <motion.h1 variants={textReveal} className="text-4xl sm:text-6xl font-bold text-gray-400 leading-tight">
             I build intelligent systems.
           </motion.h1>
         </div>
-        
+
         <motion.p variants={item} className="text-gray-400 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
-          I'm an aspiring <span className="text-white font-medium">AI Researcher</span> & Computer Science undergraduate at <span className="text-secondary font-medium">Cornell University</span>. I am driven by a curiosity for theoretical physics, mathematics, and creating intelligent algorithms that solve complex problems.
+          I'm a <span className="text-white font-medium">Computer Science</span> undergraduate at <span className="text-secondary font-medium">Cornell University</span>.  who builds scalable software and intelligent systems. I'm particularly interested in machine learning, algorithms, and systems that solve complex real-world problems.
         </motion.p>
-        
+
         <motion.div variants={item} className="flex flex-wrap gap-4">
           <Link
             to="projects"
