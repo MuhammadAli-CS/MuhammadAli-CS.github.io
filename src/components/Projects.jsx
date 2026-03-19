@@ -5,33 +5,19 @@ import { FiGithub, FiExternalLink } from 'react-icons/fi';
 const Projects = () => {
   const projects = [
     {
-      title: 'AI Fragrance Classifier',
+      title: 'SCENTIENT',
       description:
-        'A machine learning and cheminformatics application built to classify chemical structures and group them into their corresponding fragrance families. Leveraged deep learning models and RDKit for robust molecular analysis.',
-      tags: ['Python', 'PyTorch', 'RDKit', 'Scikit-Learn', 'Cheminformatics'],
-      github: 'https://github.com/MuhammadAli-CS/project-placeholder-1', // Update with actual
+        'An AI-powered fragrance analysis machine learning pipeline predicting odor descriptors from molecular SMILES strings. Implemented rigorous feature selection to reduce 1800+ Mordred descriptors, and trained Random Forest classifiers to map structures to categories like floral or woody. Built a "dupe detection" module matching fragrances by tonal profiles.',
+      tags: ['Machine Learning', 'Scikit-Learn', 'RDKit', 'Python', 'Random Forest'],
+      github: '#',
     },
     {
-      title: 'RISC-V Microprocessor & Assembly',
+      title: 'Real-Time OCaml Text Editor',
       description:
-        'Developed complex systems and applications in Assembly-level RISC-V, including pipelined microprocessor designs. Involved rigorous simulation and understanding of computer architectures.',
-      tags: ['RISC-V', 'Assembly', 'Logisim', 'Computer Architecture'],
-      github: 'https://github.com/MuhammadAli-CS/project-placeholder-2', // Update with actual
-    },
-    {
-      title: 'Trie-Based Dictionary Systems',
-      description:
-        'Implemented a highly efficient trie-based dictionary data structure. Optimized for lightning-fast autocomplete insertions, deletions, and prefix searches across extremely large datasets.',
-      tags: ['Java', 'Data Structures', 'Algorithms', 'Optimization'],
-      github: 'https://github.com/MuhammadAli-CS/project-placeholder-3', // Update with actual
-    },
-    {
-      title: 'Custom Multi-Threaded Web Server',
-      description:
-        'Built a custom, multi-threaded web server in C capable of robustly serving static resources and managing concurrent client connections securely.',
-      tags: ['C', 'Networking', 'Concurrency', 'Systems Programming'],
-      github: 'https://github.com/MuhammadAli-CS/project-placeholder-4', // Update with actual
-    },
+        'A fully collaborative real-time text editor built from scratch using asynchronous TCP networking with Lwt. Handled concurrent multi-client editing through custom Operational Transformation logic to preserve cursor consistency, enforced by strict .mli interfaces and >80% OUnit2 test coverage.',
+      tags: ['OCaml', 'Lwt', 'TCP Networking', 'Operational Transformation', 'Bogue'],
+      github: '#',
+    }
   ];
 
   return (
@@ -39,7 +25,7 @@ const Projects = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.6 }}
       >
         <div className="flex items-center mb-16">
@@ -49,7 +35,7 @@ const Projects = () => {
           <div className="h-px bg-white/10 flex-grow max-w-sm"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
           {projects.map((project, index) => (
             <motion.div
               key={index}
