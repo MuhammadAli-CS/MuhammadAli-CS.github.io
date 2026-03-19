@@ -14,13 +14,13 @@ const Contact = () => {
         <p className="text-primary font-mono mb-4 text-sm tracking-wider">05. What's Next?</p>
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Get In Touch</h2>
         <p className="text-gray-400 text-lg mb-12">
-          I'm currently seeking research opportunities, internships, and engaging conversations 
-          around AI and theoretical computer science. My inbox is always open. 
+          I'm currently seeking research opportunities, internships, and engaging conversations
+          around AI and theoretical computer science. My inbox is always open.
           Whether you have a question or just want to say hi, I'll try my best to get back to you!
         </p>
 
-        <a 
-          href="mailto:ma234@cornell.edu" 
+        <a
+          href="mailto:ma234@cornell.edu"
           className="inline-block px-8 py-4 border border-primary text-primary rounded-md font-medium hover:bg-primary/10 transition-colors mb-16"
         >
           Say Hello
@@ -37,14 +37,14 @@ const Contact = () => {
             <FiGithub size={28} />
           </a>
           <a
-            href="mailto:ma234@cornell.edu"
+            href="mailto:ma2379@cornell.edu"
             className="hover:text-white hover:-translate-y-1 transition-all"
             aria-label="Email"
           >
             <FiMail size={28} />
           </a>
           <a
-            href="https://linkedin.com/in/muhammadali-cs"
+            href="https://linkedin.com/in/muhammadali-cornell"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white hover:-translate-y-1 transition-all"
