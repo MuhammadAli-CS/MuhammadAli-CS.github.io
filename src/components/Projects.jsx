@@ -5,10 +5,10 @@ import { FiGithub, FiExternalLink } from 'react-icons/fi';
 const Projects = () => {
   const projects = [
     {
-      title: 'Loan Approval Prediction',
+      title: 'Real-Time OCaml Text Editor',
       description:
-        'Explored supervised machine learning models to predict loan approval outcomes. Conducted rigorous exploratory data analysis, handled one-hot encoding, feature selection via correlation heatmaps, and MinMax scaling. Evaluated SVM, Random Forest, and kNN models for classification.',
-      tags: ['Python', 'Scikit-Learn', 'SVM', 'Random Forest', 'kNN', 'Data Analysis'],
+        'A fully collaborative real-time text editor built from scratch using asynchronous TCP networking with Lwt. Handled concurrent multi-client editing through custom Operational Transformation logic to preserve cursor consistency, enforced by strict .mli interfaces.',
+      tags: ['OCaml', 'Lwt', 'TCP Networking', 'Operational Transformation', 'Bogue'],
       github: '#',
     },
     {
@@ -19,10 +19,10 @@ const Projects = () => {
       github: '#',
     },
     {
-      title: 'Real-Time OCaml Text Editor',
+      title: 'Loan Approval Prediction',
       description:
-        'A fully collaborative real-time text editor built from scratch using asynchronous TCP networking with Lwt. Handled concurrent multi-client editing through custom Operational Transformation logic to preserve cursor consistency, enforced by strict .mli interfaces.',
-      tags: ['OCaml', 'Lwt', 'TCP Networking', 'Operational Transformation', 'Bogue'],
+        'Explored supervised machine learning models to predict loan approval outcomes. Conducted rigorous exploratory data analysis, handled one-hot encoding, feature selection via correlation heatmaps, and MinMax scaling. Evaluated SVM, Random Forest, and kNN models for classification.',
+      tags: ['Python', 'Scikit-Learn', 'SVM', 'Random Forest', 'kNN', 'Data Analysis'],
       github: '#',
     }
   ];
