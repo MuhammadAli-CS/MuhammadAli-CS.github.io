@@ -1,6 +1,111 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FiGithub, FiExternalLink } from 'react-icons/fi';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { FiGithub } from 'react-icons/fi';
+import { uiAudio } from '../utils/audio';
+
+const TiltCard = ({ project, delay }) => {
+  const ref = useRef(null);
+  
+  // Mouse Position relative to card
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Smooth out the motion
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  // Map mouse coordinates to rotation
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+  // Calculate Glare intensity/position
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    
+    // Normalize coordinates from -0.5 to 0.5
+    const mouseX = (e.clientX - rect.left) / width - 0.5;
+    const mouseY = (e.clientY - rect.top) / height - 0.5;
+    
+    x.set(mouseX);
+    y.set(mouseY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ delay, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => uiAudio.playPop()}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="bg-darkCard rounded-xl p-8 border border-white/10 hover:border-primary/50 transition-colors group flex flex-col h-full shadow-lg relative overflow-hidden"
+    >
+      {/* Glare Layer */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-0 mix-blend-overlay opacity-0 group-hover:opacity-40 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 60%)`,
+          left: `calc(-50% + ${glareX.get()})`,
+          top: `calc(-50% + ${glareY.get()})`,
+          width: '200%',
+          height: '200%'
+        }}
+      />
+      
+      {/* Magnetic Glow effect on hover */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"></div>
+      
+      <div className="flex justify-between items-center mb-6 relative z-10" style={{ transform: "translateZ(30px)" }}>
+        <div className="text-4xl text-primary font-bold opacity-30 group-hover:opacity-100 transition-opacity duration-500">
+          {'</>'}
+        </div>
+        <div className="flex space-x-4">
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => uiAudio.playPop()}
+            className="text-gray-400 hover:text-white hover:-translate-y-1 transition-all duration-300"
+          >
+            <FiGithub size={22} />
+          </a>
+        </div>
+      </div>
+
+      <h3 className="text-2xl font-bold text-gray-200 group-hover:text-primary transition-colors duration-300 mb-3 relative z-10" style={{ transform: "translateZ(40px)" }}>
+        {project.title}
+      </h3>
+      
+      <div className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow relative z-10" style={{ transform: "translateZ(20px)" }}>
+        <p>{project.description}</p>
+      </div>
+
+      <ul className="flex flex-wrap gap-x-4 gap-y-2 mt-auto text-xs font-mono text-secondary/80 relative z-10" style={{ transform: "translateZ(30px)" }}>
+        {project.tags.map((tag, i) => (
+          <li key={i}>{tag}</li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+};
 
 const Projects = () => {
   const projects = [
@@ -56,48 +161,9 @@ const Projects = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
         {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ delay: index * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            whileHover={{ y: -10, transition: { duration: 0.4, ease: "easeOut" } }}
-            className="bg-darkCard rounded-xl p-8 border border-white/10 hover:border-primary/50 transition-colors group flex flex-col h-full shadow-lg relative overflow-hidden"
-          >
-            {/* Magnetic Glow effect on hover */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"></div>
-            
-            <div className="flex justify-between items-center mb-6 relative z-10">
-              <div className="text-4xl text-primary font-bold opacity-30 group-hover:opacity-100 transition-opacity duration-500">
-                {'</>'}
-              </div>
-              <div className="flex space-x-4">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white hover:-translate-y-1 transition-all duration-300"
-                >
-                  <FiGithub size={22} />
-                </a>
-              </div>
-            </div>
-
-            <h3 className="text-2xl font-bold text-gray-200 group-hover:text-primary transition-colors duration-300 mb-3 relative z-10">
-              {project.title}
-            </h3>
-            
-            <div className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow relative z-10">
-              <p>{project.description}</p>
-            </div>
-
-            <ul className="flex flex-wrap gap-x-4 gap-y-2 mt-auto text-xs font-mono text-secondary/80 relative z-10">
-              {project.tags.map((tag, i) => (
-                <li key={i}>{tag}</li>
-              ))}
-            </ul>
-          </motion.div>
+          <div key={index} style={{ perspective: "1000px" }}>
+            <TiltCard project={project} delay={index * 0.1} />
+          </div>
         ))}
       </div>
     </section>

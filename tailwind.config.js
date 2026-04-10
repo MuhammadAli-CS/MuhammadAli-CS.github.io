@@ -19,8 +19,18 @@ export default {
       },
       animation: {
         'gradient-x': 'gradient-x 15s ease infinite',
+        'marquee': 'marquee 30s linear infinite',
+        'marquee-reverse': 'marquee-reverse 30s linear infinite',
       },
       keyframes: {
+        'marquee': {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' }
+        },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0%)' }
+        },
         'gradient-x': {
           '0%, 100%': {
             'background-size': '200% 200%',

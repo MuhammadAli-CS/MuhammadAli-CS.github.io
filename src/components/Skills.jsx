@@ -2,38 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const Skills = () => {
-  const categories = [
-    {
-      title: 'Languages',
-      skills: ['Python', 'Java', 'HTML/CSS', 'Visual Basic', 'SQL', 'JavaScript', 'OCaml', 'MATLAB']
-    },
-    {
-      title: 'Frameworks & Tools',
-      skills: ['Scikit-learn', 'AWS', 'NumPy', 'Seaborn', 'Docker', 'Pandas', 'Matplotlib', 'RDKit', 'Chart.js', 'Unix/Linux', 'TensorFlow', 'Pytorch']
-    }
-  ];
+  const languages = ['Python', 'Java', 'HTML/CSS', 'Visual Basic', 'SQL', 'JavaScript', 'OCaml', 'MATLAB'];
+  const frameworks = ['Scikit-learn', 'AWS', 'NumPy', 'Seaborn', 'Docker', 'Pandas', 'Matplotlib', 'RDKit', 'Chart.js', 'Unix', 'TensorFlow', 'PyTorch'];
+
+  // Duplicate items to ensure smooth infinite loop
+  const langLoop = [...languages, ...languages, ...languages];
+  const frameLoop = [...frameworks, ...frameworks, ...frameworks];
 
   const headerReveal = {
     hidden: { y: "120%", rotate: 2 },
     show: { y: "0%", rotate: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.2 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 50, damping: 10 } }
-  };
-
   return (
-    <section id="skills" className="py-24 border-t border-white/10">
-      <div className="flex items-center mb-16 px-4 md:px-0 overflow-hidden py-2">
+    <section id="skills" className="py-24 border-t border-white/10 overflow-hidden">
+      <div className="flex items-center mb-16 px-4 md:px-0 overflow-hidden py-2 max-w-7xl mx-auto">
         <motion.div
            initial="hidden"
            whileInView="show"
@@ -53,43 +36,36 @@ const Skills = () => {
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {categories.map((category, index) => (
-          <motion.div 
-            key={index} 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
-            className="bg-darkCard/50 rounded-2xl p-8 border border-white/5 hover:border-secondary/30 transition-all duration-500 group shadow-lg"
-          >
-            <h3 className="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4 inline-block w-full group-hover:border-secondary/50 transition-colors duration-500">
-              {category.title}
-            </h3>
-            
-            <motion.ul 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid grid-cols-2 gap-y-3 font-mono text-sm text-gray-300"
+      <div className="relative flex flex-col gap-6 transform -rotate-2">
+        {/* Languages Ribbon (Left) */}
+        <div className="flex w-max animate-marquee space-x-6 hover:[animation-play-state:paused]">
+          {langLoop.map((skill, index) => (
+            <div 
+              key={`lang-${index}`} 
+              className="px-8 py-4 bg-darkCard border border-white/10 rounded-full flex items-center justify-center shadow-lg hover:border-primary/50 transition-colors whitespace-nowrap group cursor-default"
             >
-              {category.skills.map((skill, i) => (
-                <motion.li 
-                  key={i} 
-                  variants={itemVariants}
-                  className="flex items-center break-words group/item hover:-translate-y-1 transition-transform duration-300"
-                >
-                  <span className="w-1.5 h-1.5 bg-secondary rounded-full mr-3 shrink-0 group-hover/item:scale-150 group-hover/item:bg-primary transition-all duration-300"></span>
-                  <span className="break-all sm:break-normal group-hover/item:text-white transition-colors">{skill}</span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
-        ))}
+              <span className="w-2 h-2 rounded-full bg-primary mr-4 group-hover:scale-150 transition-transform"></span>
+              <span className="text-gray-300 group-hover:text-white font-mono text-lg">{skill}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Frameworks Ribbon (Right) */}
+        <div className="flex w-max animate-marquee-reverse space-x-6 hover:[animation-play-state:paused] -ml-[50%]">
+          {frameLoop.map((skill, index) => (
+            <div 
+              key={`frame-${index}`} 
+              className="px-8 py-4 bg-[#14141d] border border-white/5 rounded-full flex items-center justify-center shadow-lg hover:border-secondary/50 transition-colors whitespace-nowrap group cursor-default"
+            >
+              <span className="w-2 h-2 rounded-full bg-secondary mr-4 group-hover:scale-150 transition-transform"></span>
+              <span className="text-gray-300 group-hover:text-white font-mono text-lg">{skill}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
 export default Skills;
+

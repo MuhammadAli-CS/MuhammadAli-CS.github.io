@@ -1,58 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-scroll';
+import TerminalHero from './TerminalHero';
+import MagneticWrapper from './MagneticWrapper';
+import { uiAudio } from '../utils/audio';
 
-// Cycling phrases that typewrite in/out
-const PHRASES = [
-  'intelligent systems.',
-  'ML pipelines.',
-  'research software.',
-  'cool things.',
-];
-
-const TypewriterText = () => {
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [displayed, setDisplayed] = useState('');
-  const [deleting, setDeleting] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const timeoutRef = useRef(null);
-
-  useEffect(() => {
-    const current = PHRASES[phraseIdx];
-
-    if (paused) {
-      timeoutRef.current = setTimeout(() => {
-        setPaused(false);
-        setDeleting(true);
-      }, 1800);
-      return () => clearTimeout(timeoutRef.current);
-    }
-
-    if (!deleting && displayed.length < current.length) {
-      timeoutRef.current = setTimeout(() => {
-        setDisplayed(current.slice(0, displayed.length + 1));
-      }, 60);
-    } else if (!deleting && displayed.length === current.length) {
-      setPaused(true);
-    } else if (deleting && displayed.length > 0) {
-      timeoutRef.current = setTimeout(() => {
-        setDisplayed(displayed.slice(0, -1));
-      }, 35);
-    } else if (deleting && displayed.length === 0) {
-      setDeleting(false);
-      setPhraseIdx((i) => (i + 1) % PHRASES.length);
-    }
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [displayed, deleting, paused, phraseIdx]);
-
-  return (
-    <span className="text-primary">
-      {displayed}
-      <span className="inline-block w-[3px] h-[0.85em] bg-primary ml-[2px] align-middle animate-[blink_1s_step-end_infinite]" />
-    </span>
-  );
-};
+// Typewriter text removed in favor of TerminalHero
 
 const Hero = () => {
   const container = {
@@ -89,38 +42,34 @@ const Hero = () => {
           </motion.h1>
         </div>
 
-        {/* Typewriter line */}
-        <div className="overflow-hidden mb-6 py-2 min-h-[1.2em]">
-          <motion.h2 variants={textReveal} className="text-4xl sm:text-5xl font-bold text-gray-400 leading-tight">
-            I build <TypewriterText />
-          </motion.h2>
-        </div>
+        <motion.div variants={item} className="mb-10 w-full">
+          <TerminalHero />
+        </motion.div>
 
-        <motion.p variants={item} className="text-gray-400 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
-          I'm a <span className="text-white font-medium">Computer Science</span> undergraduate at{' '}
-          <span className="text-secondary font-medium">Cornell University</span>{' '}
-          who builds scalable software and intelligent systems. Particularly interested in machine learning,
-          algorithms, and systems that solve complex real-world problems.
-        </motion.p>
-
-        <motion.div variants={item} className="flex flex-wrap gap-4">
-          <Link
-            to="projects"
-            smooth={true}
-            duration={1000}
-            className="group relative px-8 py-4 rounded-md bg-transparent border border-primary text-primary hover:text-white font-medium cursor-pointer overflow-hidden transition-colors duration-300"
-          >
-            <span className="relative z-10">View Projects</span>
-            <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" />
-          </Link>
-          <Link
-            to="contact"
-            smooth={true}
-            duration={1000}
-            className="px-8 py-4 rounded-md border border-white/20 hover:border-white/60 hover:bg-white/5 transition-all duration-300 text-white font-medium cursor-pointer"
-          >
-            Contact Me
-          </Link>
+        <motion.div variants={item} className="flex flex-wrap gap-4 mt-6">
+          <MagneticWrapper>
+            <Link
+              to="projects"
+              smooth={true}
+              duration={1000}
+              onMouseEnter={() => uiAudio.playPop()}
+              className="group relative px-8 py-4 rounded-md bg-transparent border border-primary text-primary hover:text-white font-medium cursor-pointer overflow-hidden transition-colors duration-300 block"
+            >
+              <span className="relative z-10">View Projects</span>
+              <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-0" />
+            </Link>
+          </MagneticWrapper>
+          <MagneticWrapper>
+            <Link
+              to="contact"
+              smooth={true}
+              duration={1000}
+              onMouseEnter={() => uiAudio.playPop()}
+              className="px-8 py-4 flex items-center justify-center rounded-md border border-white/20 hover:border-white/60 hover:bg-white/5 transition-all duration-300 text-white font-medium cursor-pointer block h-full"
+            >
+              Contact Me
+            </Link>
+          </MagneticWrapper>
         </motion.div>
 
         {/* Centered Scroll indicator at bottom */}
