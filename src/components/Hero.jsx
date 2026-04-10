@@ -1,11 +1,60 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-scroll';
-import TerminalHero from './TerminalHero';
 import MagneticWrapper from './MagneticWrapper';
 import { uiAudio } from '../utils/audio';
 
-// Typewriter text removed in favor of TerminalHero
+// Cycling phrases that typewrite in/out
+const PHRASES = [
+  'intelligent systems.',
+  'ML pipelines.',
+  'research software.',
+  'cool things.',
+];
+
+const TypewriterText = () => {
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [deleting, setDeleting] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    const current = PHRASES[phraseIdx];
+
+    if (paused) {
+      timeoutRef.current = setTimeout(() => {
+        setPaused(false);
+        setDeleting(true);
+      }, 1800);
+      return () => clearTimeout(timeoutRef.current);
+    }
+
+    if (!deleting && displayed.length < current.length) {
+      timeoutRef.current = setTimeout(() => {
+        setDisplayed(current.slice(0, displayed.length + 1));
+      }, 60);
+    } else if (!deleting && displayed.length === current.length) {
+      setPaused(true);
+    } else if (deleting && displayed.length > 0) {
+      timeoutRef.current = setTimeout(() => {
+        setDisplayed(displayed.slice(0, -1));
+      }, 35);
+    } else if (deleting && displayed.length === 0) {
+      setDeleting(false);
+      setPhraseIdx((i) => (i + 1) % PHRASES.length);
+    }
+
+    return () => clearTimeout(timeoutRef.current);
+  }, [displayed, deleting, paused, phraseIdx]);
+
+  return (
+    <span className="text-primary">
+      {displayed}
+      <span className="inline-block w-[3px] h-[0.85em] bg-primary ml-[2px] align-middle animate-[blink_1s_step-end_infinite]" />
+    </span>
+  );
+};
 
 const Hero = () => {
   const container = {
@@ -42,9 +91,19 @@ const Hero = () => {
           </motion.h1>
         </div>
 
-        <motion.div variants={item} className="mb-10 w-full">
-          <TerminalHero />
-        </motion.div>
+        {/* Typewriter line */}
+        <div className="overflow-hidden mb-6 py-2 min-h-[1.2em]">
+          <motion.h2 variants={textReveal} className="text-4xl sm:text-5xl font-bold text-gray-400 leading-tight">
+            I build <TypewriterText />
+          </motion.h2>
+        </div>
+
+        <motion.p variants={item} className="text-gray-400 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
+          I'm a <span className="text-white font-medium">Computer Science</span> undergraduate at{' '}
+          <span className="text-secondary font-medium">Cornell University</span>{' '}
+          who builds scalable software and intelligent systems. Particularly interested in machine learning,
+          algorithms, and systems that solve complex real-world problems.
+        </motion.p>
 
         <motion.div variants={item} className="flex flex-wrap gap-4 mt-6">
           <MagneticWrapper>
