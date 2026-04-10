@@ -84,7 +84,7 @@ const Hero = () => {
         </div>
 
         <div className="overflow-hidden mb-2 py-2">
-          <motion.h1 variants={textReveal} className="text-5xl sm:text-7xl font-bold text-white leading-tight">
+          <motion.h1 variants={textReveal} className="text-5xl sm:text-7xl font-bold leading-tight text-gradient">
             Muhammad Ali.
           </motion.h1>
         </div>

@@ -5,6 +5,13 @@ import { FiGithub, FiExternalLink } from 'react-icons/fi';
 const Projects = () => {
   const projects = [
     {
+      title: 'Loan Approval Prediction',
+      description:
+        'Explored supervised machine learning models to predict loan approval outcomes. Conducted rigorous exploratory data analysis, handled one-hot encoding, feature selection via correlation heatmaps, and MinMax scaling. Evaluated SVM, Random Forest, and kNN models for classification.',
+      tags: ['Python', 'Scikit-Learn', 'SVM', 'Random Forest', 'kNN', 'Data Analysis'],
+      github: '#',
+    },
+    {
       title: 'SCENTIENT',
       description:
         'An AI-powered fragrance analysis machine learning pipeline predicting odor descriptors from molecular SMILES strings. Implemented rigorous feature selection to reduce 1800+ Mordred descriptors, and trained Random Forest classifiers to map structures to categories like floral or woody.',

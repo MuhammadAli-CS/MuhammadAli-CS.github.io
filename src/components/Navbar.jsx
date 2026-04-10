@@ -26,16 +26,19 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-darkBase/80 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'}`}>
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-primary origin-left z-[60] shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]"
-        style={{ scaleX }}
-      />
-      <div className="max-w-7xl mx-auto px-6 lg:px-24 flex justify-between items-center">
-        <Link to="hero" smooth={true} duration={500} className="text-xl font-bold cursor-pointer text-white tracking-wide">
-          <span className="text-primary">&lt;</span>Ali<span className="text-secondary">/&gt;</span>
-        </Link>
+    <div className="fixed w-full top-0 z-50 flex justify-center py-4 pointer-events-none">
+      <nav className={`pointer-events-auto transition-all duration-500 w-full ${scrolled ? 'bg-darkCard/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] border border-white/10 rounded-full max-w-5xl px-8 py-3' : 'bg-transparent max-w-7xl px-6 lg:px-24 py-4'}`}>
+        {/* Scroll Progress Bar - move out of pill or keep it subtle */}
+        {scrolled && (
+          <motion.div
+            className="absolute -bottom-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"
+            style={{ scaleX }}
+          />
+        )}
+        <div className="flex justify-between items-center w-full">
+          <Link to="hero" smooth={true} duration={500} className="text-xl font-bold cursor-pointer text-white tracking-wide">
+            <span className="text-primary">&lt;</span>Ali<span className="text-secondary">/&gt;</span>
+          </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex gap-8 items-center">
@@ -70,28 +73,29 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 w-full bg-darkCard/95 backdrop-blur-lg border-b border-white/10 flex flex-col py-4 px-6 gap-4"
-        >
-          {navLinks.map((link, index) => (
-            <Link
-              key={index}
-              to={link.to}
-              smooth={true}
-              duration={500}
-              onClick={() => setIsOpen(false)}
-              className="text-gray-300 hover:text-white transition-colors cursor-pointer text-lg"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </motion.div>
-      )}
-    </nav>
+        {/* Mobile Nav */}
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="md:hidden absolute top-full left-0 right-0 mt-4 mx-4 bg-darkCard/95 backdrop-blur-xl border border-white/10 rounded-2xl flex flex-col py-4 px-6 gap-4 shadow-2xl"
+          >
+            {navLinks.map((link, index) => (
+              <Link
+                key={index}
+                to={link.to}
+                smooth={true}
+                duration={500}
+                onClick={() => setIsOpen(false)}
+                className="text-gray-300 hover:text-white transition-colors cursor-pointer text-lg"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </nav>
+    </div>
   );
 };
 
