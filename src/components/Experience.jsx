@@ -4,50 +4,66 @@ import { motion } from 'framer-motion';
 const Experience = () => {
   const experiences = [
     {
-      title: 'Undergraduate Researcher',
-      company: 'Human-AI Interaction Design Club – Prof. Qian Yang',
-      date: 'Dec 2025 – Present',
+      title: 'Researcher',
+      company: 'AIMI Research Program – Prof. Peter Frazier',
+      date: 'Jun 2026 – Aug 2026',
+      badge: 'Research',
       description: [
-        'Designed and implemented syntactic and semantic measures of prompt specificity to quantify user intent in human–LLM interactions.',
-        'Built an NLP pipeline (spaCy, pandas, matplotlib) to extract linguistic features and track prompt evolution over time.',
-        'Compared lexicon-based metrics with LLM-based scoring to analyze trade-offs in validity, stability, and interpretability.'
+        'Investigating applications of Bayesian optimization and LLMs for autonomous experimentation in materials science.',
+        'Developing and evaluating LLM-guided experimental selection workflows and simulation-based optimization pipelines.',
+        'Collaborating on a self-driving laboratory system integrating robotics, Bayesian optimization, and AI-assisted decision-making.',
+        'Contributing to tutorial and research materials on gray-box Bayesian optimization for materials science applications.',
+      ]
+    },
+    {
+      title: 'Research Assistant',
+      company: 'Human-AI Interaction Design Lab – Prof. Qian Yang',
+      date: 'Nov 2025 – May 2026',
+      badge: 'Research',
+      description: [
+        'Developed syntactic and semantic measures of prompt specificity to quantify user intent in human–LLM interactions.',
+        'Built an NLP pipeline (spaCy, pandas, Matplotlib) to extract linguistic features and track prompt evolution over time.',
+        'Compared lexicon-based metrics with LLM-based scoring to analyze trade-offs in validity, stability, and interpretability.',
+        'Synthesized HCI, NLP, and sociolinguistics literature to study empowerment and authority in AI-mediated communication.',
       ]
     },
     {
       title: 'CS 3110 Teaching Assistant',
       company: 'Cornell University',
-      date: 'Jan 2026 – Present',
+      date: 'Jan 2026 – May 2026',
+      badge: 'Teaching',
       description: [
-        'Lead office hours and discussion support for 300+ students, covering OCaml, recursion, higher-order functions, and type-driven program design.',
-        'Provide detailed feedback on program correctness, abstraction, and functional design patterns; assist with course logistics.'
+        'Led discussion sections and office hours for 35 students in Cornell\'s 300+ student functional programming course.',
+        'Designed and graded assignments/exams while teaching OCaml, recursion, and higher-order programming concepts.',
       ]
     },
     {
       title: 'Engineering Career Center Peer Advisor',
       company: 'Cornell University',
-      date: 'Aug 2025 – Present',
+      date: 'Aug 2025 – May 2026',
+      badge: 'Leadership',
       description: [
-        'Advise engineering students on resumes, interviews, and LinkedIn profiles; coach in job search strategies and professional development.',
-        'Provide administrative support for on-campus recruiting, office programming, and employer-student engagement.'
+        'Advise engineering students on resumes, interviews, and internship strategies.',
+        'Support employer engagement events and on-campus recruiting programming.',
       ]
     },
     {
-      title: 'CS 1110 Python Consultant',
+      title: 'CS 1110 Teaching Assistant',
       company: 'Cornell University',
       date: 'Aug 2025 – Dec 2025',
+      badge: 'Teaching',
       description: [
-        'Provided instructional support through consulting hours, staffing labs, answering online questions, and grading homework and exams.',
-        'Assisted students in understanding Python concepts, debugging code, and improving problem-solving strategies.'
+        'Taught introductory Python to 40 students through office hours, debugging support, lab staffing, and grading.',
       ]
     },
     {
       title: 'Software Quality Assurance Intern',
-      company: 'ONESCREEN SOLUTIONS',
+      company: 'OneScreen Solutions',
       date: 'Jul 2023 – Aug 2023',
+      badge: 'Industry',
       description: [
-        'Learned core quality assurance practices, including test case creation, bug tracking, and ensuring software reliability before deployment.',
-        'Tested enterprise software products (Meerkat, Quizwiz, Learning Hub) across device platforms and virtual machines.',
-        'Logged 50+ UI and UX bug reports and contributed to test case documentation.'
+        'Tested enterprise software products across multiple platforms and virtual machines to identify UI/UX and functionality issues.',
+        'Logged 50+ bug reports and contributed to test case documentation and QA workflows.',
       ]
     }
   ];
@@ -92,10 +108,20 @@ const Experience = () => {
             <div className="absolute w-4 h-4 rounded-full bg-darkCard border-2 border-primary -left-[9px] top-1 group-hover:bg-primary group-hover:scale-125 transition-all duration-300 ease-out"></div>
             
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-              <h3 className="text-xl font-bold text-gray-200 group-hover:text-white transition-colors">
-                {exp.title} <span className="text-accent text-lg">@ {exp.company}</span>
-              </h3>
-              <span className="text-sm text-gray-400 font-mono mt-1 md:mt-0 whitespace-nowrap md:ml-4">{exp.date}</span>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-xl font-bold text-gray-200 group-hover:text-white transition-colors">
+                    {exp.title}
+                  </h3>
+                  {exp.badge && (
+                    <span className="px-2 py-0.5 rounded text-xs font-mono bg-primary/20 text-primary border border-primary/30">
+                      {exp.badge}
+                    </span>
+                  )}
+                </div>
+                <span className="text-accent text-lg mt-1">@ {exp.company}</span>
+              </div>
+              <span className="text-sm text-gray-400 font-mono mt-2 md:mt-0 whitespace-nowrap md:ml-4">{exp.date}</span>
             </div>
             
             <ul className="text-gray-400 text-sm md:text-base space-y-3 mt-4">
