@@ -41,7 +41,7 @@ const Experience = () => {
       title: 'Engineering Career Center Peer Advisor',
       company: 'Cornell University',
       date: 'Aug 2025 – May 2026',
-      badge: 'Leadership',
+      badge: 'Mentorship',
       description: [
         'Advise engineering students on resumes, interviews, and internship strategies.',
         'Support employer engagement events and on-campus recruiting programming.',
