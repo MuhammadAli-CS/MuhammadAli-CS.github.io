@@ -49,7 +49,7 @@ const About = () => {
             I am a Computer Science undergraduate at <strong>Cornell University</strong> (Expected May 2028), driven by a deep curiosity for how learning algorithms generalize beyond controlled settings.
           </p>
           <p>
-            My research spans multiple domains within AI. With Professor Qian Yang, I focus on how users express intent when interacting with large language models, building NLP pipelines to quantify prompt specificity and track evolving constraints over time. Recently, I've also joined the AIMI Research Program under Prof. Peter Frazier, where I investigate applications of Bayesian optimization and LLMs for autonomous experimentation in materials science.
+            My research spans multiple domains within AI. In the AI-MI SURP Program under Prof. Peter Frazier, I work on high-dimensional Bayesian optimization — extending MORBO with shape-adaptive trust regions that improved hypervolume by 64–72% over the published method. With Professor Qian Yang, I focus on how users express intent when interacting with large language models, building NLP pipelines to quantify prompt specificity and track evolving constraints over time.
           </p>
           <p>
             Alongside research, I've built projects like <strong>Scentient</strong>, an ML pipeline predicting odor descriptors from molecular SMILES strings. Dealing with high-dimensional representations and observing generalization gaps in practice has fueled my interest in the intersection of optimization, inductive bias, and theoretical machine learning.

@@ -20,7 +20,7 @@ const Contact = () => {
         </p>
 
         <a
-          href="mailto:ma234@cornell.edu"
+          href="mailto:ma2379@cornell.edu"
           className="inline-block px-8 py-4 border border-primary text-primary rounded-md font-medium hover:bg-primary/10 transition-colors mb-16"
         >
           Say Hello

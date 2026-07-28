@@ -4,15 +4,15 @@ import { motion } from 'framer-motion';
 const Experience = () => {
   const experiences = [
     {
-      title: 'Researcher',
-      company: 'AIMI Research Program – Prof. Peter Frazier',
+      title: 'Research Assistant',
+      company: 'AI-MI SURP Program – Prof. Peter Frazier',
       date: 'Jun 2026 – Aug 2026',
       badge: 'Research',
       description: [
-        'Investigating applications of Bayesian optimization and LLMs for autonomous experimentation in materials science.',
-        'Developing and evaluating LLM-guided experimental selection workflows and simulation-based optimization pipelines.',
-        'Collaborating on a self-driving laboratory system integrating robotics, Bayesian optimization, and AI-assisted decision-making.',
-        'Contributing to tutorial and research materials on gray-box Bayesian optimization for materials science applications.',
+        'Extended MORBO with shape-adaptive trust regions (PCA-rotated, CMA-ES-adapted ellipsoids vs. isotropic hypercubes), improving hypervolume by 64–72% over the published method in high-dimensional optimization.',
+        'Diagnosed a curse-of-dimensionality failure in a lengthscale-rescaling baseline and designed SparseDTLZ2, a synthetic benchmark isolating when trust-region shape adaptation is effective.',
+        'Built and evaluated five algorithmic extensions including CMA-ES covariance adaptation, spherically projected linear kernels, dimension-scaled priors, and bandit-based trust-region geometry selection.',
+        'Ported an archived PyTorch/BoTorch research codebase to current releases and executed 100+ distributed experiments on a multi-GPU SLURM cluster.',
       ]
     },
     {

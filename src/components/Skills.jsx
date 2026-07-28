@@ -5,11 +5,15 @@ const Skills = () => {
   const categories = [
     {
       title: 'Languages',
-      skills: ['Python', 'Java', 'HTML/CSS', 'Visual Basic', 'SQL', 'JavaScript', 'OCaml', 'MATLAB']
+      skills: ['OCaml', 'Python', 'Java', 'C', 'JavaScript', 'TypeScript', 'SQL', 'Assembly', 'HTML/CSS', 'Visual Basic', 'MATLAB']
     },
     {
-      title: 'Frameworks & Tools',
-      skills: ['Scikit-learn', 'AWS', 'NumPy', 'Seaborn', 'Docker', 'Pandas', 'Matplotlib', 'RDKit', 'Chart.js', 'Unix/Linux', 'TensorFlow', 'Pytorch']
+      title: 'Libraries & Frameworks',
+      skills: ['PyTorch', 'Scikit-learn', 'TensorFlow', 'RDKit', 'FastAPI', 'React', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'spaCy', 'Streamlit', 'Chart.js']
+    },
+    {
+      title: 'Tools',
+      skills: ['Git', 'Docker', 'Linux', 'AWS', 'TCP Networking', 'SLURM']
     }
   ];
 

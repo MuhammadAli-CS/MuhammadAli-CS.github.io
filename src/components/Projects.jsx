@@ -110,25 +110,32 @@ const TiltCard = ({ project, delay }) => {
 const Projects = () => {
   const projects = [
     {
+      title: 'High-Dimensional Bayesian Optimization',
+      description:
+        'Research extending MORBO with shape-adaptive trust regions — PCA-rotated, CMA-ES-adapted ellipsoids replacing isotropic hypercubes — improving hypervolume by 64–72% on high-dimensional multi-objective benchmarks. Built five algorithmic extensions and ran 100+ distributed experiments on a multi-GPU SLURM cluster.',
+      tags: ['Bayesian Optimization', 'PyTorch', 'BoTorch', 'CMA-ES', 'SLURM'],
+      github: 'https://github.com/MuhammadAli-CS/MOBO-HighDim',
+    },
+    {
       title: 'Real-Time OCaml Text Editor',
       description:
         'A fully collaborative real-time text editor built from scratch using asynchronous TCP networking with Lwt. Handled concurrent multi-client editing through custom Operational Transformation logic to preserve cursor consistency, enforced by strict .mli interfaces.',
       tags: ['OCaml', 'Lwt', 'TCP Networking', 'Operational Transformation', 'Bogue'],
-      github: '#',
+      github: 'https://github.com/MuhammadAli-CS/OcamlDocs',
     },
     {
       title: 'SCENTIENT',
       description:
         'An AI-powered fragrance analysis machine learning pipeline predicting odor descriptors from molecular SMILES strings. Implemented rigorous feature selection to reduce 1800+ Mordred descriptors, and trained Random Forest classifiers to map structures to categories like floral or woody.',
       tags: ['Machine Learning', 'Scikit-Learn', 'RDKit', 'Python', 'Random Forest'],
-      github: '#',
+      github: 'https://github.com/MuhammadAli-CS/Scentient',
     },
     {
       title: 'Loan Approval Prediction',
       description:
         'Explored supervised machine learning models to predict loan approval outcomes. Conducted rigorous exploratory data analysis, handled one-hot encoding, feature selection via correlation heatmaps, and MinMax scaling. Evaluated SVM, Random Forest, and kNN models for classification.',
       tags: ['Python', 'Scikit-Learn', 'SVM', 'Random Forest', 'kNN', 'Data Analysis'],
-      github: '#',
+      github: 'https://github.com/MuhammadAli-CS/loanApproval',
     }
   ];
 
